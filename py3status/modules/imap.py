@@ -100,7 +100,7 @@ class Py3status:
         response = {'cached_until': self.py3.time_in(self.cache_timeout)}
         if self.mail_error is not None:
             self.py3.log(self.mail_error, level=self.py3.LOG_ERROR)
-            self.py3.error(self.mail_error)
+            self.py3.error(self.mail_error, self.cache_timeout)
             self.mail_error = None
 
         # II -- format response
@@ -126,7 +126,7 @@ class Py3status:
         self.use_idle = supports_idle
         self.py3.log("Will use {}".format('idling' if self.use_idle else 'polling'))
         if self.use_idle and not supports_idle:
-            self.py3.error("Server does not support IDLE")
+            self.py3.error("Server does not support IDLE", self.cache_timeout)
 
     def _connection_ssl(self):
         connection = imaplib.IMAP4_SSL(self.server, int(self.port))

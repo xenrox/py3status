@@ -254,11 +254,12 @@ class Py3:
         """
         Raise an error for the module.
 
-        :param msg: message to be displayed explaining the error
-        :param timeout: how long before we should retry.  For permanent errors
-            `py3.CACHE_FOREVER` should be returned.  If not supplied then the
-            modules `cache_timeout` will be used.
+        :param msg: message to be displayed explaining the error.
+        :param timeout: how long before we should retry.
         """
+        if timeout is None:
+            timeout = self.CACHE_FOREVER
+
         raise ModuleErrorException(msg, timeout)
 
     def flatten_dict(self, d, delimiter="-", intermediates=False, parent_key=None):

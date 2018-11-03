@@ -73,7 +73,7 @@ class Py3status:
         except self.py3.CommandError as e:
             # something went wrong show error to user
             output = e.output or e.error
-            self.py3.error(output)
+            self.py3.error(output, self.cache_timeout)
 
         if output_lines:
             output = output_lines[0]
