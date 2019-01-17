@@ -32,7 +32,7 @@ class UdevMonitor:
         self.udev_observer.start()
         self.py3_wrapper.log("udev monitoring enabled")
 
-    def _udev_event(self, action, device):
+    def _udev_event(self, device, action):
         """
         This is a callback method that will trigger a refresh on subscribers.
         """
@@ -41,7 +41,7 @@ class UdevMonitor:
         # )
         self.trigger_actions(device.subsystem)
 
-    def subscribe(self, py3_module, trigger_action, subsystem):
+    def subscribe(self, py3_module, subsystem, trigger_action):
         """
         Subscribe the given module to the given udev subsystem.
 
