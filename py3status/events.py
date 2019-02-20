@@ -247,11 +247,13 @@ class Events(Thread):
         if module.allow_config_clicks:
             button = event.get("button", 0)
             on_click = self.on_click.get(module_name, {}).get(str(button))
+            modifier = any(x.startswith("Mod") for x in event["modifiers"])
+            refresh = event["refresh"] = modifier and button == 2
             if on_click:
                 task = EventClickTask(module_name, event, self, on_click)
                 self.py3_wrapper.timeout_queue_add(task)
-            # otherwise setup default action on button 2 press
-            elif button == 2:
+            # otherwise use mod1-5 + button2 to refresh events
+            elif refresh:
                 default_event = True
 
         # do the work
