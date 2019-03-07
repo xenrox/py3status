@@ -12,7 +12,7 @@ Configuration parameters:
     button_stop: mouse button to stop the player (default None)
     button_toggle: mouse button to toggle between play and pause mode (default 1)
     format: see placeholders below
-        (default '{previous}{toggle}{next} {state} [{artist} - ][{title}]')
+        (default '{previous} {toggle} {next} {state} [{artist} - ][{title}]')
     format_none: define output if no player is running
         (default 'no player running')
     icon_next: text for the next button in the button control panel (default '»')
@@ -64,7 +64,7 @@ Tested players:
 Examples:
 ```
 mpris {
-    format = "{previous}{play}{next} {player}: {state} [[{artist} - {title}]|[{title}]]"
+    format = "{previous} {play} {next} {player}: {state} [[{artist} - {title}]|[{title}]]"
     format_none = "no player"
     player_priority = "[mpd, cantata, vlc, bomi, *]"
 }
@@ -89,13 +89,8 @@ mpris {
 
 SAMPLE OUTPUT
 [
-    {'color': '#00FF00', 'index': 'previous', 'min_width': 20,
-     'align': 'center', 'full_text': u'\xab'},
-    {'color': '#00FF00', 'index': 'toggle', 'min_width': 20,
-     'align': 'center', 'full_text': u'\u25ae'},
-    {'color': '#00FF00', 'index': 'next', 'min_width': 20,
-     'align': 'center', 'full_text': u'\xbb '},
-    {'full_text': u'\u25b6 Happy Mondays - Fat Lady Wrestlers'}
+    {'color': '#00FF00', 'full_text': u'\xab \u25ae \xbb \u25b6 '},
+    {'color': '#00FF00', 'full_text': u'Happy Mondays - Fat Lady Wrestlers'}
 ]
 """
 
@@ -139,7 +134,7 @@ class Py3status:
     button_previous = 5
     button_stop = None
     button_toggle = 1
-    format = "{previous}{toggle}{next} {state} [{artist} - ][{title}]"
+    format = "{previous} {toggle} {next} {state} [{artist} - ][{title}]"
     format_none = "no player running"
     icon_next = u"»"
     icon_pause = u"▮"
@@ -303,8 +298,6 @@ class Py3status:
                 "color": color,
                 "full_text": control_state["icon"],
                 "index": button,
-                "min_width": 20,
-                "align": "center",
             }
 
         return response
